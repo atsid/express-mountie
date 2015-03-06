@@ -1,0 +1,39 @@
+{
+  "name": "express-mountie",
+  "version": "1.0.0",
+  "description": "Express service discovery and mounting",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atsid/express-marco.git"
+  },
+  "keywords": [
+    "express",
+    "node"
+  ],
+  "author": "Chris Trevino",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/atsid/express-marco/issues"
+  },
+  "devDependencies": {
+    "babel": "^4.7.1",
+    "chai": "^2.1.1",
+    "express": "^4.12.2",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^4.0.0",
+    "gulp-changed": "^1.1.1",
+    "gulp-cli": "^0.1.5",
+    "gulp-jscs": "^1.4.0",
+    "gulp-jshint": "^1.9.2",
+    "gulp-mocha": "^2.0.0",
+    "run-sequence": "^1.0.2"
+  },
+  "homepage": "https://github.com/atsid/express-marco",
+  "dependencies": {
+    "debug": "^2.1.2"
+  }
+}
