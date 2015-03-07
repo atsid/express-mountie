@@ -2,9 +2,23 @@
 [![Dependency Status](https://david-dm.org/atsid/express-mountie.svg)](https://david-dm.org/atsid/express-mountie)
 
 # express-marco
-Express Service Discovery
+Express Service Auto-Discovery and Mounting
+
+```
+project
+│   README.md
+│   Gulpfile.js
+└───server
+    ├───apps
+    |   └───subresourceA
+    |   |   └───index.js
+    |   └───subresourceB
+    |       └───index.js
+    │   main.js
+```
 
 ```js
+// main.js
 var express = require('express'),
     mountie = require('express-mountie'),
     path = require('path'),
@@ -14,6 +28,28 @@ mountie.findAndMount(path.join(__dirname, 'apps'), app, '/api').then(() => {
       console.log('server listening on port ' + app.get('port'));
   });
 });
+```
+```js
+// subresource index.js
+module.exports = {
+    getBeerList: {
+        method: 'GET',
+        path: '/beers',
+        middleware: [
+            // Chain of Middleware functions
+            beerlist.get
+            send.json
+        ]
+    },
+    getBeer: {
+        method: 'GET',
+        path: '/beers/:id',
+        middleware: [
+            beerlist.getById
+            send.json
+        ]
+    }
+};
 ```
 
 ## Installation
