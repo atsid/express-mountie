@@ -14,7 +14,11 @@
     "express",
     "node"
   ],
-  "author": "Chris Trevino",
+  "author": "ATS",
+  "contributors": [
+    "Nathan Evans <nathan.evans@atsid.com>",
+    "Chris Trevino <chris.trevino@atsid.com>"
+  ],
   "license": "Apache",
   "bugs": {
     "url": "https://github.com/atsid/express-mountie/issues"
