@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/atsid/express-mountie.svg?branch=master)](https://travis-ci.org/atsid/express-mountie)
 [![Dependency Status](https://david-dm.org/atsid/express-mountie.svg)](https://david-dm.org/atsid/express-mountie)
 
+[![NPM](https://nodei.co/npm/express-mountie.png)](https://nodei.co/npm/express-mountie/)
+
 # express-mountie
 Express Service Auto-Discovery and Mounting
 
