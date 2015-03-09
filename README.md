@@ -28,7 +28,7 @@ var express = require('express'),
     
 mountie({
     parent: app,
-    src: './apps',
+    src: path.join(__dirname, './apps'),
     prefix: '/api'
 }).then(() => {
     app.listen(3000);
