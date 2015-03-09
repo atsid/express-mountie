@@ -1,13 +1,5 @@
 'use strict';
-module.exports = {
-    list: {
-        method: 'GET',
-        path: '/test-path',
-        middleware: [function () {}]
-    },
-    read: {
-        method: 'GET',
-        path: '/test-path/:id',
-        middleware: [function () {}]
-    }
-};
+var subapp = require('express')();
+subapp.get('/test-path', (req, res, next) => res.send("collection"));
+subapp.get('/test-path/:id', (req, res, next) => res.send("item"));
+module.exports = subapp;

@@ -23,8 +23,7 @@ module.exports = {
         debug('discovering apps in ' + root);
         let startApps = (files) => {
             debug('discovered: ' + files);
-            let routes = files.map((file) => require(path.join(root, file)));
-            return routes.map((route) => this.startApp(route));
+            return files.map((file) => require(path.join(root, file)));
         };
         let scanDir = (dir) => {
             return new Promise((resolve, reject) => {
@@ -51,30 +50,11 @@ module.exports = {
      * @param mountPoint The path at which to mount the sub-app
      */
     mount (parent, app, mountPoint) {
+        debug("Mounting app");
         if (mountPoint) {
             parent.use(mountPoint, app);
         } else {
             parent.use(app);
         }
-    },
-
-    /**
-     * Simple wiring function to create Express app instances given a route config.
-     * Config looks like:
-     * {
-         *   <business method name>: {
-         *      method: <method>,
-         *      path: <path>,
-         *      middleware: <array of middleware>
-         *   }
-         * }
-     */
-    startApp (routeConfig) {
-        let app = require('express')();
-        Object.keys(routeConfig).forEach((name) => {
-            let route = routeConfig[name];
-            app[route.method.toLowerCase()](route.path, route.middleware);
-        });
-        return app;
     }
 };
