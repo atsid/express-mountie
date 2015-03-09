@@ -13,9 +13,9 @@ project
 └───server
     ├───apps
     |   └───subresourceA
-    |   |   └───index.js
+    |   |   └───index.js (exports express app)
     |   └───subresourceB
-    |       └───index.js
+    |       └───index.js (exports express app)
     │   main.js
 ```
 
@@ -25,33 +25,14 @@ var express = require('express'),
     mountie = require('express-mountie'),
     path = require('path'),
     app = express();
-mountie.findAndMount(path.join(__dirname, 'apps'), app, '/api').then(() => {
-    http.createServer(app).listen(app.get('port'), () => {
-      console.log('server listening on port ' + app.get('port'));
-  });
+    
+mountie({
+    parent: app,
+    src: './apps',
+    prefix: '/api'
+}).then(() => {
+    app.listen(3000);
 });
-```
-```js
-// subresource index.js
-module.exports = {
-    getBeerList: {
-        method: 'GET',
-        path: '/beers',
-        middleware: [
-            // Chain of Middleware functions
-            beerlist.get
-            send.json
-        ]
-    },
-    getBeer: {
-        method: 'GET',
-        path: '/beers/:id',
-        middleware: [
-            beerlist.getById
-            send.json
-        ]
-    }
-};
 ```
 
 ## Installation
