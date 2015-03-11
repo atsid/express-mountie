@@ -7,7 +7,7 @@
 # express-mountie
 Express Service Auto-Discovery and Mounting
 
-express-mountie is a microlibrary for discovering express apps and mounting them into a master express app. This is useful for organization and strict segregation of RESTful resources. Organizing services in this way will allow you to break apart and independently scale your webapps when it becomes appropriate.
+express-mountie is a microlibrary for discovering express routers and apps and then mounting them into a master express app. This is useful for organization and strict segregation of RESTful resources. Organizing services in this way will allow you to break apart and independently scale your webapps when it becomes appropriate.
 
 ```
 project
@@ -18,7 +18,7 @@ project
     |   └───subresourceA
     |   |   └───index.js (exports express app)
     |   └───subresourceB
-    |       └───index.js (exports express app)
+    |       └───index.js (exports express router)
     │   main.js
 ```
 
