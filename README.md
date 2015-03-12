@@ -33,9 +33,8 @@ mountie({
     parent: app,
     src: path.join(__dirname, './apps'),
     prefix: '/api'
-}).then(() => {
-    app.listen(3000);
 });
+app.listen(3000);
 ```
 
 ## Installation
@@ -43,9 +42,3 @@ mountie({
 ```bash
 $ npm install express-mountie --save
 ```
-
-## Dependencies
-express-mountie requires runtime Promise support. This can be provided by:
-* Adding an npm dependency to `bluebird`
-* Using nodejs with the --harmony flag to enable promises
-* Including a promise-providing polyfill such as babeljs.io or https://github.com/jakearchibald/es6-promise

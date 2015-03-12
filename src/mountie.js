@@ -6,8 +6,7 @@
  */
 var fs = require('fs'),
     path = require('path'),
-    debug = require('debug')('mountie'),
-    MountiePromise = Promise || require('bluebird');
+    debug = require('debug')('mountie');
 
 module.exports = (mountConfig) => {
     let parent = mountConfig.parent,
@@ -40,12 +39,9 @@ module.exports = (mountConfig) => {
 
     function scanDir(dir) {
         debug("scanning for apps in " + dir);
-        return new MountiePromise((resolve, reject) => {
-            fs.readdir(dir, (err, result) => {
-                debug('discovered ', result);
-                return err ? reject(err) : resolve(result);
-            });
-        });
+        let result = fs.readdirSync(dir);
+        debug('discovered ', result);
+        return result;
     }
 
     function loadApp(file) {
@@ -61,5 +57,6 @@ module.exports = (mountConfig) => {
         return files.map(loadAndMount);
     }
 
-    return scanDir(appHome).then(startApps);
+    let files = scanDir(appHome);
+    return startApps(files);
 };
