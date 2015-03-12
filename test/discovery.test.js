@@ -7,13 +7,12 @@ var chai = require('chai'),
     mountie = require('../lib/mountie');
 
 describe('Application Discovery', () => {
-
     it('finds one app in test apps folder', () => {
         return mountie({
             src: path.join(__dirname, '../test/data/test-apps'),
             parent: express()
         }).then((apps) => {
-            chai.assert.equal(apps.length, 1);
+            expect(apps.length).to.equal(1);
         });
     });
 
@@ -24,12 +23,9 @@ describe('Application Discovery', () => {
             parent: app
         }).then((apps) => {
             let subapp = apps[0];
-            subapp.on('mount', (parent) => {
-                chai.assert.equal(subapp.mountpath, '/test-root');
-                done();
-            });
+            expect(subapp.mountpath).to.equal('/');
             done();
-        });
+        }).catch(done);
     });
 
     it('fails if invalid apps folder is provided', (done) => {
@@ -40,7 +36,7 @@ describe('Application Discovery', () => {
             chai.assert.fail();
             done();
         }).catch((err) => {
-            chai.assert.equal(err.code, 'ENOENT');
+            expect(err.code).to.equal('ENOENT');
             done();
         });
     });
@@ -48,5 +44,29 @@ describe('Application Discovery', () => {
     it('fails if no express app is provided', () => {
         let config = { src: path.join(__dirname, '../test/data/test-apps') };
         expect(() => mountie(config)).to.throw();
+    });
+
+    it('can select the mount path using a prefix string', () => {
+        let app = express();
+        return mountie({
+            src: path.join(__dirname, '../test/data/test-apps'),
+            parent: app,
+            prefix: "/api"
+        }).then((apps) => {
+            let subapp = apps[0];
+            expect(subapp.mountpath).to.equal('/api');
+        });
+    });
+
+    it ('can select the mount path using a prefix function', () => {
+        let app = express();
+        return mountie({
+            src: path.join(__dirname, '../test/data/test-apps'),
+            parent: app,
+            prefix: appName => "/api/" + appName
+        }).then((apps) => {
+            let subapp = apps[0];
+            expect(subapp.mountpath).to.equal('/api/test1');
+        });
     });
 });
