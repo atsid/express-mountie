@@ -12,7 +12,7 @@ var fs = require('fs'),
 module.exports = (mountConfig) => {
     let parent = mountConfig.parent,
         appHome = mountConfig.src,
-        mountPoint = mountConfig.prefix;
+        prefix = mountConfig.prefix;
 
     if (!parent) {
         throw new Error("mountConfig.parent must contain an express app");
@@ -25,17 +25,21 @@ module.exports = (mountConfig) => {
         return path.join(appHome, appName);
     }
 
+    function mountPoint(appName) {
+        return (typeof prefix === "function") ? prefix(appName) : prefix;
+    }
+
     function mountApp(file, app) {
-        if (typeof mountPoint === "function") {
-            mountPoint = mountPoint(file);
-        }
-        debug("mounting app '" + file + "' at " + (mountPoint || '/'));
-        (mountPoint ? parent.use(mountPoint, app) : parent.use(app));
+        let mp = mountPoint(file);
+        //jscs:disable
+        debug(`mounting app '${file}' at ${mp || '/'}`);
+        //jscs:enable
+        (mp ? parent.use(mp, app) : parent.use(app));
         return app;
     }
 
     function scanDir(dir) {
-        debug("scanning for apps in ", dir);
+        debug("scanning for apps in " + dir);
         return new MountiePromise((resolve, reject) => {
             fs.readdir(dir, (err, result) => {
                 debug('discovered ', result);

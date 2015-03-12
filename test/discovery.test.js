@@ -12,7 +12,7 @@ describe('Application Discovery', () => {
             src: path.join(__dirname, '../test/data/test-apps'),
             parent: express()
         }).then((apps) => {
-            expect(apps.length).to.equal(1);
+            expect(apps.length).to.equal(2);
         });
     });
 
@@ -65,8 +65,8 @@ describe('Application Discovery', () => {
             parent: app,
             prefix: appName => "/api/" + appName
         }).then((apps) => {
-            let subapp = apps[0];
-            expect(subapp.mountpath).to.equal('/api/test1');
+            expect(apps[0].mountpath).to.equal('/api/test1');
+            expect(apps[1].mountpath).to.equal('/api/test2');
         });
     });
 });
