@@ -39,7 +39,8 @@ module.exports = (mountConfig) => {
 
     function scanDir(dir) {
         debug("scanning for apps in " + dir);
-        let result = fs.readdirSync(dir);
+        let stripExtension = (file) => path.basename(file, path.extname(file));
+        let result = fs.readdirSync(dir).map(stripExtension);
         debug('discovered ', result);
         return result;
     }
