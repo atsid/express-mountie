@@ -1,6 +1,6 @@
 {
   "name": "express-mountie",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Express service discovery and mounting",
   "main": "index.js",
   "scripts": {
