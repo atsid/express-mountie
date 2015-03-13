@@ -58,4 +58,16 @@ describe('Application Discovery', () => {
         expect(apps[0].mountpath).to.equal('/api/test1');
         expect(apps[1].mountpath).to.equal('/api/test2');
     });
+
+    it ('can mount nested applications', () => {
+        let app = express();
+        let apps = mountie({
+            src: path.join(__dirname, '../test/data/nested-apps'),
+            parent: app,
+            prefix: appName => "/api/" + appName
+        });
+        expect(apps[0].mountpath).to.equal('/api/auth');
+        expect(apps[1].mountpath).to.equal('/api/test1');
+        expect(apps[2].mountpath).to.equal('/api/test2');
+    });
 });

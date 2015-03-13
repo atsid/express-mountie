@@ -1,6 +1,7 @@
 'use strict';
 var subapp = require('express')(),
     debug = require('debug')('mountie:test'),
+    path = require('path'),
     mountie = require('express-mountie');
 
 /**
