@@ -63,11 +63,18 @@ gulp.task('test', () => {
         .pipe(mocha({reporter: 'nyan'}));
 });
 
+gulp.task('enableDebugging', () => {
+    if (!process.env.DEBUG) {
+        process.env.DEBUG = 'mountie';
+    }
+});
+
 /**
  * Meta/Control Tasks
  */
 gulp.task('build', (cb) => {
     runSequence(
+        'enableDebugging',
         ['static-analysis', 'babel'],
         'test',
         cb
