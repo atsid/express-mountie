@@ -40,10 +40,16 @@ module.exports = (mountConfig) => {
 
     function scanDir(dir) {
         debug("scanning for apps in " + dir);
+        let stripExtension = (file) => path.basename(file, path.extname(file));
         return new MountiePromise((resolve, reject) => {
             fs.readdir(dir, (err, result) => {
-                debug('discovered ', result);
-                return err ? reject(err) : resolve(result);
+                if (err) {
+                    reject(err);
+                } else {
+                    result = result.map(stripExtension);
+                    debug('discovered ', result);
+                    resolve(result);
+                }
             });
         });
     }
