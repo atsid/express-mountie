@@ -92,6 +92,10 @@ gulp.task('report-coverage', () => {
         .pipe(coveralls());
 });
 
+gulp.task('ci-config', () => {
+    MOCHA_REPORTER = 'spec';
+});
+
 /**
  * Meta/Control Tasks
  */
@@ -106,6 +110,7 @@ gulp.task('build', (cb) => {
 
 gulp.task('ci-build', (cb) => {
     runSequence(
+        'ci-config',
         'build',
         'report-coverage',
         cb
