@@ -32,6 +32,13 @@ describe('Application Discovery', () => {
         })).to.throw();
     });
 
+    it('fails if no app folder is provided', () => {
+        expect(() => mountie({
+            src: 'fake-folder-xyz',
+            parent: express()
+        })).to.throw();
+    });
+
     it('fails if no express app is provided', () => {
         let config = { src: path.join(__dirname, 'data/test-apps') };
         expect(() => mountie(config)).to.throw();
