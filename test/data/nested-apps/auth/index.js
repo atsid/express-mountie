@@ -2,7 +2,7 @@
 var subapp = require('express')(),
     debug = require('debug')('mountie:test'),
     path = require('path'),
-    mountie = require('../../../../lib/mountie');
+    mountie = require('../../../../src/mountie');
 
 /**
  * Mount the auth providers into this auth app

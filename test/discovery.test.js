@@ -4,7 +4,7 @@ var chai = require('chai'),
     expect = chai.expect,
     express = require('express'),
     path = require('path'),
-    mountie = require('../lib/mountie');
+    mountie = require('../src/mountie');
 
 describe('Application Discovery', () => {
     it('finds one app in test apps folder', () => {

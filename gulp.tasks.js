@@ -109,6 +109,6 @@ gulp.task('ci-build', (cb) => {
         'build',
         'report-coverage',
         cb
-    )
+    );
 });
 gulp.task('default', ['build']);
