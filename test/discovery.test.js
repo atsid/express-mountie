@@ -34,7 +34,6 @@ describe('Application Discovery', () => {
 
     it('fails if no app folder is provided', () => {
         expect(() => mountie({
-            src: 'fake-folder-xyz',
             parent: express()
         })).to.throw();
     });
