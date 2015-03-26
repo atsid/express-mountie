@@ -7,7 +7,6 @@ var gulp = require('gulp'),
     changed = require('gulp-changed'),
     istanbul = require('gulp-istanbul'),
     runSequence = require('run-sequence'),
-    coveralls = require('gulp-coveralls'),
     isparta = require('isparta'),
     MOCHA_REPORTER = 'nyan',
     paths = {
@@ -27,6 +26,8 @@ var gulp = require('gulp'),
         paths.build.main,
         paths.build.tasks
     ];
+
+require('gulp-semver-tasks')(gulp);
 
 /**
  * Transpiling Tasks
