@@ -4,7 +4,7 @@
   "description": "Express service discovery and mounting",
   "main": "index.js",
   "scripts": {
-    "test": "gulp ci-build"
+    "test": "gulp ci-build && CODECLIMATE_REPO_TOKEN=1f876a3141f393fe194d65caa68001250b008a45ff0f16086ba48c735964a0a9 codeclimate < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -26,12 +26,12 @@
   "devDependencies": {
     "babel": "^4.7.1",
     "chai": "^2.1.1",
+    "codeclimate-test-reporter": "0.0.4",
     "express": "^4.12.2",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.0",
     "gulp-changed": "^1.1.1",
     "gulp-cli": "^0.1.5",
-    "gulp-coveralls": "^0.1.3",
     "gulp-istanbul": "^0.6.0",
     "gulp-jscs": "^1.4.0",
     "gulp-jshint": "^1.9.2",

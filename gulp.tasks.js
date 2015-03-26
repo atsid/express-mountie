@@ -87,11 +87,6 @@ gulp.task('enableDebugging', () => {
     }
 });
 
-gulp.task('report-coverage', () => {
-    return gulp.src('coverage/**/lcov.info')
-        .pipe(coveralls());
-});
-
 gulp.task('ci-config', () => {
     MOCHA_REPORTER = 'spec';
 });
@@ -112,8 +107,9 @@ gulp.task('ci-build', (cb) => {
     runSequence(
         'ci-config',
         'build',
-        'report-coverage',
         cb
     );
 });
+
+
 gulp.task('default', ['build']);
