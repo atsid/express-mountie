@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/atsid/express-mountie.svg?branch=master)](https://travis-ci.org/atsid/express-mountie)
-[![Coverage Status](https://coveralls.io/repos/atsid/express-mountie/badge.svg)](https://coveralls.io/r/atsid/express-mountie)
-[![Dependency Status](https://david-dm.org/atsid/express-mountie.svg)](https://david-dm.org/atsid/express-mountie)
+[![Test Coverage](https://codeclimate.com/github/atsid/express-mountie/badges/coverage.svg)](https://codeclimate.com/github/atsid/express-mountie)[![Dependency Status](https://david-dm.org/atsid/express-mountie.svg)](https://david-dm.org/atsid/express-mountie)
 [![Code Climate](https://codeclimate.com/github/atsid/express-mountie/badges/gpa.svg)](https://codeclimate.com/github/atsid/express-mountie)
 
 [![NPM](https://nodei.co/npm/express-mountie.png)](https://nodei.co/npm/express-mountie/)
