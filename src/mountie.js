@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
 /**
  * Provides functionality to load and start sub-apps.
  *
  */
-var fs = require('fs'),
-    path = require('path'),
-    debug = require('debug')('mountie');
+var fs = require("fs");
+var path = require("path");
+var debug = require("debug")("mountie");
 
 module.exports = (mountConfig) => {
     let parent = mountConfig.parent,
@@ -17,7 +17,7 @@ module.exports = (mountConfig) => {
         throw new Error("mountConfig.parent must contain an express app");
     }
     if (!appHome) {
-        throw new Error('mountConfig.appHome must be defined');
+        throw new Error("mountConfig.appHome must be defined");
     }
 
     function appPath(appName) {
@@ -30,10 +30,12 @@ module.exports = (mountConfig) => {
 
     function mountApp(file, app) {
         let mp = mountPoint(file);
-        //jscs:disable
-        debug(`mounting app '${file}' at ${mp || '/'}`);
-        //jscs:enable
-        (mp ? parent.use(mp, app) : parent.use(app));
+        debug(`mounting app "${file}" at ${mp || "/"}`);
+        if (mp) {
+            parent.use(mp, app);
+        } else {
+            parent.use(app);
+        }
         return app;
     }
 
@@ -41,12 +43,12 @@ module.exports = (mountConfig) => {
         debug("scanning for apps in " + dir);
         let stripExtension = (file) => path.basename(file, path.extname(file));
         let result = fs.readdirSync(dir).map(stripExtension);
-        debug('discovered ', result);
+        debug("discovered ", result);
         return result;
     }
 
     function loadApp(file) {
-        debug("loading app '" + file + "'");
+        debug(`loading app "${file}"`);
         return require(appPath(file));
     }
 
@@ -58,6 +60,6 @@ module.exports = (mountConfig) => {
         return files.map(loadAndMount);
     }
 
-    let files = scanDir(appHome);
-    return startApps(files);
+    let found = scanDir(appHome);
+    return startApps(found);
 };

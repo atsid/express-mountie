@@ -1,22 +1,23 @@
-'use strict';
-var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs'),
-    mocha = require('gulp-mocha'),
-    babel = require('gulp-babel'),
-    changed = require('gulp-changed'),
-    istanbul = require('gulp-istanbul'),
-    runSequence = require('run-sequence'),
-    isparta = require('isparta'),
-    MOCHA_REPORTER = 'nyan',
+"use strict";
+var gulp = require("gulp"),
+    mocha = require("gulp-mocha"),
+    eslint = require("gulp-eslint"),
+    babel = require("gulp-babel"),
+    changed = require("gulp-changed"),
+    istanbul = require("gulp-istanbul"),
+    runSequence = require("run-sequence"),
+    isparta = require("isparta");
+require("gulp-semver-tasks")(gulp);
+
+let MOCHA_REPORTER = "nyan",
     paths = {
-        source: 'src/**/*.js',
-        dest: 'lib/',
-        main: 'index.js',
-        test: 'test/**/*.test.js',
+        source: "src/**/*.js",
+        dest: "lib/",
+        main: "index.js",
+        test: "test/**/*.test.js",
         build: {
-            main: 'Gulpfile.js',
-            tasks: 'gulp.tasks.js'
+            main: "Gulpfile.js",
+            tasks: "gulp.tasks.js"
         }
     },
     STATIC_CHECK_GLOB = [
@@ -27,12 +28,10 @@ var gulp = require('gulp'),
         paths.build.tasks
     ];
 
-require('gulp-semver-tasks')(gulp);
-
 /**
  * Transpiling Tasks
  */
-gulp.task('babel', () => {
+gulp.task("babel", () => {
     let BABEL_SRC = paths.source,
         BABEL_DEST = paths.dest;
     return gulp.src(BABEL_SRC)
@@ -44,26 +43,17 @@ gulp.task('babel', () => {
 /**
  * Static Analysis Tasks
  */
-gulp.task('lint', () => {
+gulp.task("lint", () => {
     return gulp.src(STATIC_CHECK_GLOB)
-        .pipe(jshint({lookup: true}))
-        .pipe(jshint.reporter('default'));
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
 });
-gulp.task('jscs', () => {
-    return gulp.src(STATIC_CHECK_GLOB)
-        .pipe(jscs({
-            configPath: '.jscrc'
-        }));
-});
-gulp.task('static-analysis', [
-    'lint',
-    'jscs'
-]);
 
 /**
  * Testing Tasks
  */
-gulp.task('test', () => {
+gulp.task("test", () => {
     return new Promise((resolve, reject) => {
         gulp.src(paths.source)
             .pipe(istanbul({
@@ -71,46 +61,49 @@ gulp.task('test', () => {
                 includeUntested: true
             }))
             .pipe(istanbul.hookRequire())
-            .on('finish', () => {
+            .on("finish", () => {
                 gulp.src(paths.test)
                     .pipe(mocha({reporter: MOCHA_REPORTER}))
                     .pipe(istanbul.writeReports({
-                        reporters: ['lcov', 'text-summary']
+                        reporters: ["lcov", "text-summary"]
                     }))
-                    .on('end', resolve);
+                    .on("end", resolve);
+            })
+            .on("error", (err) => {
+                reject(err);
             });
     });
 });
 
-gulp.task('enableDebugging', () => {
+gulp.task("enableDebugging", () => {
     if (!process.env.DEBUG) {
-        process.env.DEBUG = 'mountie';
+        process.env.DEBUG = "mountie";
     }
 });
 
-gulp.task('ci-config', () => {
-    MOCHA_REPORTER = 'spec';
+gulp.task("ci-config", () => {
+    MOCHA_REPORTER = "spec";
 });
 
 /**
  * Meta/Control Tasks
  */
-gulp.task('build', (cb) => {
+gulp.task("build", (cb) => {
     runSequence(
-        'enableDebugging',
-        ['static-analysis', 'babel'],
-        'test',
+        "enableDebugging",
+        ["lint", "babel"],
+        "test",
         cb
     );
 });
 
-gulp.task('ci-build', (cb) => {
+gulp.task("ci-build", (cb) => {
     runSequence(
-        'ci-config',
-        'build',
+        "ci-config",
+        "build",
         cb
     );
 });
 
 
-gulp.task('default', ['build']);
+gulp.task("default", ["build"]);
